@@ -1,4 +1,5 @@
 from flask import Flask, redirect, request, session
+import threading
 import random
 import requests
 import time
@@ -52,6 +53,14 @@ def health_check():
         json.dump(results, f, indent=4)
     print("Health checks results have been saved to 'healthChecksForBackendServer.json'.")
 
+def schedule_health_checks():
+    def loop():
+        while True:
+            health_check()
+            time.sleep(HEALTH_CHECK_INTERVAL)
+
+    threading.Thread(target=loop, daemon=True).start()
+
 @app.route("/")
 def load_balancer():
     """Load balancer redirects requests to backend servers."""
@@ -89,9 +98,10 @@ if __name__ == "__main__":
         print("SSL certificates loaded successfully!")
     except Exception as e:
         print(f"Error loading SSL certificates: {e}")
-        exit(1)  
+        exit(1) 
 
-    health_check() 
+    health_check()
+    schedule_health_checks() 
 
     print("Health checks completed, starting Flask server...\n")
     print("HTTPS Load Balancer is running on https://127.0.0.1:5000")
