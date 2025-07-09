@@ -84,8 +84,8 @@ if __name__ == "__main__":
 
     ssl_context = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
     try:
-        ssl_context.load_cert_chain(certfile=r"D:\VSCode\LoadBalancer\cert.pem", 
-                                    keyfile=r"D:\VSCode\LoadBalancer\key.pem")
+        ssl_context.load_cert_chain(certfile=r"D:\VSCode\LoadBalancerForWebsite\cert.pem", 
+                                    keyfile=r"D:\VSCode\LoadBalancerForWebsite\key.pem")
         print("SSL certificates loaded successfully!")
     except Exception as e:
         print(f"Error loading SSL certificates: {e}")

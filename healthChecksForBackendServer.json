@@ -1,0 +1,22 @@
+{
+    "http://www.google.com/": {
+        "status": "healthy",
+        "status_code": 200
+    },
+    "https://www.youtube.com/": {
+        "status": "healthy",
+        "status_code": 200
+    },
+    "https://www.instagram.com/": {
+        "status": "healthy",
+        "status_code": 200
+    },
+    "https://portals.au.edu.pk/": {
+        "status": "healthy",
+        "status_code": 200
+    },
+    "https://chatgpt.com/": {
+        "status": "unhealthy",
+        "status_code": 403
+    }
+}
