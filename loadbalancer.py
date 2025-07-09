@@ -89,20 +89,13 @@ def status():
     return {"health_status": health_status}, 200
 
 if __name__ == "__main__":
-    print("Configuring SSL for secure communication...")
-
-    ssl_context = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
-    try:
-        ssl_context.load_cert_chain(certfile=r"D:\VSCode\LoadBalancerForWebsite\cert.pem", 
-                                    keyfile=r"D:\VSCode\LoadBalancerForWebsite\key.pem")
-        print("SSL certificates loaded successfully!")
-    except Exception as e:
-        print(f"Error loading SSL certificates: {e}")
-        exit(1) 
+    print("Starting health checks...")
 
     health_check()
-    schedule_health_checks() 
+    schedule_health_checks()
 
-    print("Health checks completed, starting Flask server...\n")
-    print("HTTPS Load Balancer is running on https://127.0.0.1:5000")
-    app.run(host="0.0.0.0", port=5000, ssl_context=ssl_context)
+    from os import environ
+    port = int(environ.get("PORT", 5000))
+
+    print(f"Health checks running. Starting Flask server on port {port}...\n")
+    app.run(host="0.0.0.0", port=port)
